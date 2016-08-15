@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
  
 var config = require('./config');
 var setupController = require('./api/controllers/setupController');
+var todoController = require('./api/controllers/todoController');
 
 
 var app = express();
@@ -23,6 +24,7 @@ console.log(config.getDbConnectionString());
 mongoose.connect(config.getDbConnectionString());
 
 setupController(app);
+todoController(app);
 
 
 // setup views
