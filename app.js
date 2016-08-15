@@ -1,6 +1,10 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
+var mongoose = require('mongoose');
+ 
+var config = require('./config');
+
 
 var app = express();
 var port = process.env.PORT || 3000;
@@ -13,6 +17,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('dev')); 
 
 app.set('view engine', 'ejs');
+
+console.log(config.getDbConnectionString());
+mongoose.connect(config.getDbConnectionString());
 
 // setup views
 app.get("/", function (req, res) {
