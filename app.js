@@ -4,6 +4,7 @@ var morgan = require('morgan');
 var mongoose = require('mongoose');
  
 var config = require('./config');
+var setupController = require('./api/controllers/setupController');
 
 
 var app = express();
@@ -20,6 +21,9 @@ app.set('view engine', 'ejs');
 
 console.log(config.getDbConnectionString());
 mongoose.connect(config.getDbConnectionString());
+
+setupController(app);
+
 
 // setup views
 app.get("/", function (req, res) {
