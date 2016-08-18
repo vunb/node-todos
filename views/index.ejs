@@ -1,14 +1,68 @@
 <!doctype html>
-<html>
+<html ng-app="app.todos">
 
 <head>
 
     <title>Node/Angular Todos</title>
 
+    <!-- load cdn styles -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <!-- load app styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- load cdn scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js"></script>
+
+    <!-- load app -->
+    <script src="assets/js/main/app.js"></script>
+
+
 </head>
 
-<body>
-    <h1>Node Todos !!!</h1>
+<body ng-controller="todoController">
+    <div class="container">
+
+        <!-- HEADER AND TODO COUNT -->
+        <div class="jumbotron text-center">
+            <h1>Todo Dashboard <span class="label label-info">{{ todos.length }}</span></h1>
+        </div>
+
+        <!-- TODO LIST -->
+        <div id="todo-list" class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+
+                <!-- LOOP OVER THE TODOS IN $scope.todos -->
+                <div class="checkbox" ng-repeat="todo in todos">
+                    <a href="#"><i class="fa fa-remove"></i></a>
+                    <input type="checkbox" ng-click="deleteTodo(todo._id)" ng-model="todo.isDone"> <span ng-class="{strike: todo.isDone}">{{ todo.text }}</span>
+                </div>
+
+                <p class="text-center" ng-show="loading">
+                    <span class="fa fa-spinner fa-spin fa-3x"></span>
+                </p>
+
+            </div>
+        </div>
+
+        <!-- FORM TO CREATE TODOS -->
+        <div id="todo-form" class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <form>
+                    <div class="form-group">
+
+                        <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+                        <input type="text" class="form-control input-lg text-center" placeholder="What do you want to do ?" ng-model="formData.text">
+                    </div>
+
+                    <!-- createToDo() WILL CREATE NEW TODOS -->
+                    <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()" ng-disabled="!formData.text">Add</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
 </body>
 
 </html>
