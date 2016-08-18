@@ -8,12 +8,14 @@
     <!-- load cdn styles -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.2.0/css/xeditable.min.css">
 
     <!-- load app styles -->
     <link rel="stylesheet" href="assets/css/style.css">
 
     <!-- load cdn scripts -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.2.0/js/xeditable.min.js"></script>
 
     <!-- load app -->
     <script src="assets/js/main/app.js"></script>
@@ -35,8 +37,13 @@
 
                 <!-- LOOP OVER THE TODOS IN $scope.todos -->
                 <div class="checkbox" ng-repeat="todo in todos">
-                    <a href="#"><i class="fa fa-remove"></i></a>
-                    <input type="checkbox" ng-click="deleteTodo(todo._id)" ng-model="todo.isDone"> <span ng-class="{strike: todo.isDone}">{{ todo.text }}</span>
+                    <a href ng-click="deleteTodo(todo)"><i class="fa fa-remove"></i></a>
+                    <a href ng-click="textBtnForm.$show()" ng-hide="textBtnForm.$visible"><i class="fa fa-edit"></i></a>
+                    <input type="checkbox" ng-change="updateTodo(todo)" ng-model="todo.isDone"> <span ng-class="{strike: todo.isDone}" editable-text="todo.text" onaftersave="updateTodo(todo)" e-form="textBtnForm">
+                        
+            {{ todo.text || 'empty' }}
+
+                        </span>
                 </div>
 
                 <p class="text-center" ng-show="loading">
