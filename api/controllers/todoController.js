@@ -1,86 +1,96 @@
-var Todos = require('../models/todoModel');
+var Todos = require("../models/todoModel");
 
 function getTodos(res) {
     Todos.find(function (err, todos) {
 
-        // if there is an error retrieving, send the error. nothing after res.send(err) will execute
         if (err) {
-            res.send(err);
+            res.status(500).json(err);
+        } else {
+            res.json(todos);
         }
 
-        res.json(todos); // return all todos in JSON format
     });
 }
-;
 
 module.exports = function (app) {
 
-
-    // api ---------------------------------------------------------------------
     // get all todos
-    app.get('/api/todos', function (req, res) {
-        // use mongoose to get all todos in the database
+    app.get("/api/todos", function (req, res) {
         getTodos(res);
     });
 
-
-    app.get('/api/todo/:id', function (req, res) {
+    // /api/todo/123456
+    app.get("/api/todo/:id", function (req, res) {
 
         Todos.findById({ _id: req.params.id }, function (err, todo) {
-            if (err) throw err;
-
-            res.send(todo);
+            if (err) {
+                throw err;
+            } else {
+                res.json(todo);
+            }
         });
 
     });
 
-    app.post('/api/todo', function (req, res) {
+    /**
+     * Create a todo
+     */
 
+    app.post("/api/todo", function (req, res) {
 
-        // create a todo, information comes from AJAX request from Angular
-        Todos.create({
+        var todo = {
             text: req.body.text,
             isDone: req.body.isDone
-        }, function (err, todo) {
-            if (err)
-                res.send(err);
+        };
 
-            // get and return all the todos after you create another
-            getTodos(res);
+        Todos.create(todo, function (err, todo) {
+            if (err) {
+                throw err;
+            } else {
+                getTodos(res);
+            }
         });
 
     });
 
-    app.put('/api/todo', function (req, res) {
+    /**
+     * Update a todo
+     */
 
-        if (!req.body.id) {
-            return res.status(500).send('ID is required');
+    app.put("/api/todo", function (req, res) {
+        if (!req.body._id) {
+            return res.status(500).send("ID is required");
+        } else {
+            Todos.update({
+                _id: req.body._id
+            }, {
+                    text: req.body.text,
+                    isDone: req.body.isDone
+                }, function (err, todo) {
+                    if (err) {
+                        return res.status(500).json(err);
+                    } else {
+                        getTodos(res);
+                    }
+                });
         }
-
-        Todos.update({
-            _id: req.body.id
-        }, {
-                text: req.body.text,
-                isDone: req.body.isDone
-            }, function (err, todo) {
-                if (err)
-                    return res.send(err);
-
-                return getTodos(res);
-            });
-
     });
 
-    app.delete('/api/todo/:todo_id', function (req, res) {
+    /**
+     * Delete a todo
+     */
+
+    app.delete("/api/todo/:id", function (req, res) {
 
         Todos.remove({
-            _id: req.params.todo_id
+            _id: req.params.id
         }, function (err, todo) {
-            if (err)
-                res.send(err);
-
-            getTodos(res);
-        });
+            if (err) {
+                return res.status(500).json(err);
+            } else {
+                getTodos(res);
+            }
+        })
 
     });
 

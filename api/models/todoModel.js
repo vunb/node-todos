@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 
 var Schema = mongoose.Schema;
 
@@ -7,6 +7,6 @@ var todoSchema = new Schema({
     isDone: Boolean
 });
 
-var Todos = mongoose.model('Todos', todoSchema);
+var Todos = mongoose.model("Todos", todoSchema);
 
 module.exports = Todos;

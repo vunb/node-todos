@@ -1,4 +1,6 @@
 {
     "username": "vunb",
-    "password": "1234567890"
+    "password": "1234567890",
+    "dbname": "node-todos",
+    "hostname": "ds139705.mlab.com:39705"
 }
