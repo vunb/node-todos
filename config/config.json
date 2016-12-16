@@ -1,4 +1,6 @@
 {
-    "username": "vunb",
-    "password": "1234567890"
+    "username": "YOUR_USERNAME_HERE",
+    "password": "YOUR_PASSWORD_HERE",
+    "hostname": "YOUR_HOSTNAME_URL",
+    "database": "YOUR_DATABASE_NAME"
 }

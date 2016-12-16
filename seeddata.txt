@@ -1,0 +1,5 @@
+﻿1 Học node.js
+2 Học Angular.js và ejs
+3 Viết một ứng dụng Node.js hoàn chỉnh
+4 Hoàn thành chương trình node-todos
+5 Deploy dự án lên Heroku
