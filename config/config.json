@@ -1,6 +1,6 @@
 {
-    "username": "YOUR_USERNAME_HERE",
-    "password": "YOUR_PASSWORD_HERE",
-    "hostname": "YOUR_HOSTNAME_URL",
-    "database": "YOUR_DATABASE_NAME"
+    "username": "vunb",
+    "password": "1234567890",
+    "hostname": "ds139705.mlab.com:39705",
+    "database": "node-todos"
 }
